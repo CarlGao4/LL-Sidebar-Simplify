@@ -2,16 +2,16 @@
     "$schema": "./manifest_schema.json",
     "manifest_version": 4,
     "type": "extension",
-    "name": "插件模板",
-    "slug": "plugin_template",
-    "description": "LiteLoaderQQNT 的插件模板",
+    "name": "边栏精简",
+    "slug": "sidebar_simplify",
+    "description": "精简QQNT的边栏",
     "version": "0.1.0",
-    "icon": "./icon.png",
+    "icon": "./icon.svg",
     "thumb": "./icon.svg",
     "authors": [
         {
-            "name": "LiteLoaderQQNT",
-            "link": "https://github.com/LiteLoaderQQNT"
+            "name": "CarlGao4",
+            "link": "https://github.com/CarlGao4"
         }
     ],
     "platform": [
@@ -25,11 +25,10 @@
         "preload": "./src/preload.js"
     },
     "repository": {
-        "repo": "LiteLoaderQQNT/Plugin-Template",
+        "repo": "CarlGao4/LL-Sidebar-Simplify",
         "branch": "main",
         "release": {
-            "tag": "0.1.0",
-            "file": "Plugin-Template.zip"
+            "tag": "0.1.0"
         }
     }
 }
