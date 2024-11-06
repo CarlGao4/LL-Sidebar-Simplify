@@ -25,7 +25,6 @@ const readConfig = () => {
 
 const toggleUpper = async (label, status) => {
     const windows = BrowserWindow.getAllWindows();
-    console.log("TOGGLE REQUEST", label, status);
     try {
         for (const window of windows) {
             await window.webContents.executeJavaScript(`
@@ -41,7 +40,6 @@ const toggleUpper = async (label, status) => {
 
 const toggleLower = async (label, status) => {
     const windows = BrowserWindow.getAllWindows();
-    console.log("TOGGLE REQUEST", label, status);
     try {
         for (const window of windows) {
             await window.webContents.executeJavaScript(`
@@ -56,6 +54,7 @@ const toggleLower = async (label, status) => {
 }
 
 const tryToggleFromConfig = async () => {
+    console.log("sidebar_simplify tryToggleFromConfig");
     const config = await readConfig()
     if (config && config.upper) {
         Object.keys(config.upper).forEach(async (key) => { await toggleUpper(key, config.upper[key]) });
@@ -65,7 +64,10 @@ const tryToggleFromConfig = async () => {
     }
 }
 
-// 创建窗口时触发
+/**
+ * 创建窗口时触发
+ * @param {BrowserWindow} window - 创建的窗口
+ */
 exports.onBrowserWindowCreated = (window) => {
     // window 为 Electron 的 BrowserWindow 实例
     window.webContents.on('did-finish-load', tryToggleFromConfig);
@@ -82,6 +84,7 @@ exports.onBrowserWindowCreated = (window) => {
             }
         }
     });
+    window.on('focus', tryToggleFromConfig);
 }
 
 // 用户登录时触发
@@ -143,12 +146,12 @@ ipcMain.handle('sidebar_simplify.isUpperVisible', async (_, label) => {
                     const isElementVisible = (el) => Boolean(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
                     const el = Array.from(document.querySelectorAll('.sidebar__upper .nav-item[aria-label]')).find(el => el.getAttribute("aria-label") === "${label}");
                     if (el) isElementVisible(el);
-                } catch(e) { console.log("\x1b[4;41m", e, "\x1b[0m") }
+                } catch(e) { console.log(e) }
             `);
             if (result) return result;
         }
         return false;
-    } catch (e) { console.log("\x1b[4;31m", e, "\x1b[0m") }
+    } catch (e) { console.log(e) }
 });
 
 ipcMain.handle('sidebar_simplify.isLowerVisible', async (_, label) => {
@@ -160,12 +163,12 @@ ipcMain.handle('sidebar_simplify.isLowerVisible', async (_, label) => {
                     const isElementVisible = (el) => Boolean(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
                     const el = Array.from(document.querySelectorAll('.sidebar__lower .func-menu__item_wrap:has(*[aria-label])')).find(el => el.querySelector('*[aria-label]').getAttribute("aria-label") === "${label}");
                     if (el) isElementVisible(el)
-                } catch(e) { console.log("\x1b[4;41m", e, "\x1b[0m") }
+                } catch(e) { console.log(e) }
             `);
             if (result) return result;
         }
         return false;
-    } catch (e) { console.log("\x1b[4;31m", e, "\x1b[0m") }
+    } catch (e) { console.log(e) }
 });
 
 ipcMain.handle('sidebar_simplify.toggleUpper', async (_, label, status) => toggleUpper(label, status));
