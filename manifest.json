@@ -5,7 +5,7 @@
     "name": "边栏精简",
     "slug": "sidebar_simplify",
     "description": "精简QQNT的边栏",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "icon": "./icon.svg",
     "thumb": "./icon.svg",
     "authors": [
@@ -28,7 +28,7 @@
         "repo": "CarlGao4/LL-Sidebar-Simplify",
         "branch": "main",
         "release": {
-            "tag": "0.1.0"
+            "tag": "0.2.0"
         }
     }
 }
